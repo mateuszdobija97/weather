@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useSelector } from 'react-redux';
 
-function App() {
+import Search from './components/Search'
+import Weather from './components/Weather';
+import { RootState } from './store';
+
+const App = () => {
+  const weatherData = useSelector((state: RootState) => state.weather.data);
+  const loading = useSelector((state: RootState) => state.weather.loading);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Search />
+      {loading ? <p>Loading...</p> : weatherData && <Weather weatherData={weatherData} />}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
